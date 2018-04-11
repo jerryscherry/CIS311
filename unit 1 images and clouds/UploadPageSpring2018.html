@@ -7,7 +7,7 @@
        
     </head>
     <body>
-        <button id="login">Login</button>
+        <button id="return-login" style="display:none">Return to Login</button> 
     
         <input type="file" id="file-chooser" />
         <button id="upload-button" style="display:none">Upload to S3</button> <!-- button is hidden until login is verified -->
@@ -93,6 +93,7 @@
 			var fileChooser = document.getElementById('file-chooser');
 			var button = document.getElementById('upload-button');
 			var results = document.getElementById('results');
+			var returnLogin = doucment.getElementbyId('reload-login');
 			
 			button.addEventListener('click', function () {
 				var file = fileChooser.files[0];
@@ -108,7 +109,7 @@
 						};
 					var s = "https://s3-us-west-2.amazonaws.com/jerryfangspring2018/" + objKey;
 					console.log("IMAGE WILL LOAD " + s);
-
+					
 					bucket.putObject(params, function (err, data) {
 						if (err) {
 							results.innerHTML = 'ERROR: ' + err;
@@ -124,7 +125,9 @@
 					results.innerHTML = 'Nothing to upload.';
 				}
 				}, false);
-				
+				returnLogin.addEventListner('click', function () {
+					window.location.href = "https://s3-us-west-2.amazonaws.com/samplestarterbucketpring18/index-S3-demo-spring18.html";
+				}
 			function listObjs() {
 				var prefix = 'facebook-' + fbUserId;
 				bucket.listObjects({
